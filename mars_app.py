@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import pymongo
-import scrape_mars
+from scrape_mars import scrape
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def home():
 
 @app.route("/scrape")
 def scrape():
-    scrape_dict = scrape_mars.scrape()
+    scrape_dict = scrape()
 
 if __name__ == "__main__":
     app.run(debug=True)
