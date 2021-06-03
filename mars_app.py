@@ -7,8 +7,8 @@ app = Flask(__name__)
 scrape_dict = []
 
 @app.route("/")
-def index():
-    return render_template("index.html", dict=scrape_dict)
+def home():
+    return render_template("index.html", scraped=scrape_dict)
 
 
 @app.route("/scrape")
