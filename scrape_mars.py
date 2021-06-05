@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
+
+from splinter import Browser
+from bs4 import BeautifulSoup as bs
+from webdriver_manager.chrome import ChromeDriverManager
+import os
+import pandas as pd
+import requests
+
 def scrape():
     scrape_dict = []
-
-    from splinter import Browser
-    from bs4 import BeautifulSoup as bs
-    from webdriver_manager.chrome import ChromeDriverManager
-    import os
-    import pandas as pd
-    import requests 
 
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
 
 # headline/story
-
+      
     url = 'https://redplanetscience.com/'
     browser.visit(url)
     html = browser.html
@@ -82,8 +83,11 @@ def scrape():
 
     browser.quit()
 
-    return scrape_dict
     print(scrape_dict)
+    return scrape_dict
+
+
+    
 
 
 
