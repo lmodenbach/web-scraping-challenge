@@ -79,11 +79,11 @@ def scrape():
         href = a.get("href")
         img_url = str(url) + str(href)
         hemisphere_image_urls.append({"title":title, "img_url":img_url})
-        scrape_dict.append(hemisphere_image_urls)
-
-    browser.quit()
+    
+    scrape_dict.append(hemisphere_image_urls)
 
     print(scrape_dict)
+    browser.quit()
     return scrape_dict
 
 
