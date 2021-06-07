@@ -9,10 +9,11 @@ import pandas as pd
 import requests
 
 def scrape():
-    scrape_dict = []
 
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
+
+    scrape_dict = {}
 
 # headline/story
       
@@ -24,7 +25,8 @@ def scrape():
     news_title = soup.find_all("div", {"class": "content_title"})[0].text
     news_note = soup.find_all("div", {"class": "article_teaser_body"})[0].text
 
-    scrape_dict.append({"news_title":news_title, "news_note":news_note})
+    scrape_dict.update({"news_title":news_title}) 
+    scrape_dict.update({"news_note":news_note})
 
 # featured image
 
@@ -37,7 +39,7 @@ def scrape():
     href = firsta.get("href")
     featured_image_url = str(browser.url) + str(href)
 
-    scrape_dict.append({"feat_img_url":featured_image_url})
+    scrape_dict.update({"feat_img_url":featured_image_url})
 
 # facts
 
@@ -50,13 +52,13 @@ def scrape():
     df.drop(0, inplace=True)
 
     html = df.to_html()
-    scrape_dict.append({"html":html})
+    scrape_dict.update({"html":html})
 
 # hemispheres
 
-    hemisphere_image_urls = []
     img_url = ""
     title = ""
+    img_dict = {}
 
     for x in range(1, 8, 2):
         url = 'https://marshemispheres.com/'
@@ -78,10 +80,10 @@ def scrape():
         a = soup.find_all("a")[3]
         href = a.get("href")
         img_url = str(url) + str(href)
-        hemisphere_image_urls.append({"title":title, "img_url":img_url})
+        img_dict.update({"title":title}) 
+        img_dict.update({"img_url":img_url})
     
-    scrape_dict.append(hemisphere_image_urls)
-
+    scrape_dict.update(img_dict)
     print(scrape_dict)
     browser.quit()
     return scrape_dict
