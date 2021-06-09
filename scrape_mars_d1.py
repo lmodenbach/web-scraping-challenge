@@ -4,16 +4,14 @@
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 from webdriver_manager.chrome import ChromeDriverManager
-import os
 import pandas as pd
-import requests
 
 def scrape():
 
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
 
-    scrape_dict = {}
+    mars_data_dict = {}
 
 # headline/story
       
@@ -25,8 +23,8 @@ def scrape():
     news_title = soup.find_all("div", {"class": "content_title"})[0].text
     news_note = soup.find_all("div", {"class": "article_teaser_body"})[0].text
 
-    scrape_dict.update({"news_title":news_title}) 
-    scrape_dict.update({"news_note":news_note})
+    mars_data_dict.update({"news_title":news_title}) 
+    mars_data_dict.update({"news_note":news_note})
 
 # featured image
 
@@ -39,7 +37,7 @@ def scrape():
     href = firsta.get("href")
     featured_image_url = str(browser.url) + str(href)
 
-    scrape_dict.update({"feat_img_url":featured_image_url})
+    mars_data_dict.update({"feat_img_url":featured_image_url})
 
 # facts
 
@@ -47,17 +45,17 @@ def scrape():
     browser.visit(url)
 
     tables = pd.read_html(url)
-    df = pd.DataFrame(tables[0])
-    df.columns = df.iloc[0]
-    df.drop(0, inplace=True)
+    tables_df = pd.DataFrame(tables[0])
+    tables_df.columns = tables_df.iloc[0]
+    tables_df.drop(0, inplace=True)
 
-    html = df.to_html()
-    scrape_dict.update({"html":html})
+    html = tables_df.to_html()
+    mars_data_dict.update({"html":html})
 
 # hemispheres
 
     img_url = ""
-    title = ""
+    img_title = ""
     img_dict = {}
 
     for x in range(1, 8, 2):
@@ -67,26 +65,27 @@ def scrape():
         soup = bs(html, 'html.parser')
         a = soup.find_all("a", {"class": "itemLink product-item"})[x]
     
-        title_tagged = a.h3
-        title = title_tagged.text
+        img_title_tagged = a.h3
+        img_title = img_title_tagged.text
 
         href = a.get("href")
-        image_search_url = str(url) + str(href)
+        img_search_url = str(url) + str(href)
 
-        browser.visit(image_search_url)
+        browser.visit(img_search_url)
         html = browser.html
         soup = bs(html, 'html.parser')
 
         a = soup.find_all("a")[3]
         href = a.get("href")
         img_url = str(url) + str(href)
-        img_dict.update({"title" + str(x):title}) 
+        img_dict.update({"img_title" + str(x):img_title}) 
         img_dict.update({"img_url" + str(x):img_url})
     
-    scrape_dict.update(img_dict)
-    print(scrape_dict)
+    mars_data_dict.update(img_dict)
+    print(mars_data_dict)
     browser.quit()
-    return scrape_dict
+    
+    return mars_data_dict
 
 
     
