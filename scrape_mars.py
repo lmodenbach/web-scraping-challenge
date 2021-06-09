@@ -80,8 +80,8 @@ def scrape():
         a = soup.find_all("a")[3]
         href = a.get("href")
         img_url = str(url) + str(href)
-        img_dict.update({"title":title}) 
-        img_dict.update({"img_url":img_url})
+        img_dict.update({"title" + str(x):title}) 
+        img_dict.update({"img_url" + str(x):img_url})
     
     scrape_dict.update(img_dict)
     print(scrape_dict)
