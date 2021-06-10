@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import pymongo
-from scrape_mars_d1 import scrape
+from scrape_mars import scrape
 
 app = Flask(__name__)
 
@@ -15,7 +15,7 @@ mars_data_dict = {}
 def home():
     function_call()
     data_from_mongo = db.mars.find_one()
-    print(data_from_mongo)
+    #print(data_from_mongo)
     return render_template("index.html", scraped=data_from_mongo)
 
 
