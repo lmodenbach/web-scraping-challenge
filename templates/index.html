@@ -8,18 +8,19 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-  <h3>Freshest Mars News</h3> 
+  <h1 class="text-center">Mission To Mars</h1>
   <button type="button" onClick="window.location.reload();" class="btn btn-primary btn-lg">Fresh Scrape</button>
-  <h4>{{scraped.news_title}}</h4>
-  <h5>{{scraped.news_note}}</h5>
+  <h3 class="text-center">Latest Mars News</h3> 
+  <h4 class="text-center">{{scraped.news_title}}</h4>
+  <h5 class="text-center">{{scraped.news_note}}</h5>
   <br>
   <img src='{{scraped.feat_img_url}}' width="200" height="200">
-  <h3>Featured Mars Image</h3>
+  <h3 class="text-center">Featured Mars Image</h3>
   <br>
-  <h3>Mars Facts</h3>
+  <h3 class="text-right">Mars Facts</h3>
   {{scraped.html}}
   <br>
-  <h3>Mars Hemispheres</h3>
+  <h3 class="text-left">Mars Hemispheres</h3>
   <img src='{{scraped.img_url1}}' width="200" height="200">
   <h4>{{scraped.img_title1}}</h4>
   <img src='{{scraped.img_url3}}' width="200" height="200">
