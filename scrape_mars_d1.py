@@ -48,9 +48,9 @@ def scrape():
     tables_df = pd.DataFrame(tables[0])
     tables_df.columns = tables_df.iloc[0]
     tables_df.drop(0, inplace=True)
-
     html = tables_df.to_html()
-    mars_data_dict.update({"html":html})
+    raw_html = r'{}'.format(html)
+    mars_data_dict.update({"html":raw_html})
 
 # hemispheres
 
