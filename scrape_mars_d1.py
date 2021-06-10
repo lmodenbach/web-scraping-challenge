@@ -82,7 +82,6 @@ def scrape():
         img_dict.update({"img_url" + str(x):img_url})
     
     mars_data_dict.update(img_dict)
-    print(mars_data_dict)
     browser.quit()
     
     return mars_data_dict
