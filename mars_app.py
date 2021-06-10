@@ -15,13 +15,13 @@ mars_data_dict = {}
 def home():
     function_call()
     data_from_mongo = db.mars.find_one()
-    #print(data_from_mongo)
     return render_template("index.html", scraped=data_from_mongo)
 
 
 @app.route("/scrape")
 def function_call():
     mars_data_dict = scrape()
+    db.mars.drop()
     db.mars.insert_one(mars_data_dict)
 
 if __name__ == "__main__":
