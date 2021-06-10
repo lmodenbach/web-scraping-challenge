@@ -44,13 +44,13 @@ def scrape():
     url = 'https://galaxyfacts-mars.com/'
     browser.visit(url)
 
-    tables = pd.read_html(url)[0]
-    tables_df = pd.DataFrame(tables)
+    tables = pd.read_html(url)
+    tables_df = pd.DataFrame(tables[0])
     tables_df.columns = tables_df.iloc[0]
     tables_df.drop(0, inplace=True)
-    html = tables_df.to_html()
-    print(html)
-    mars_data_dict.update({"html":html})
+    table_html = tables_df.to_html()
+    print(table_html)
+    mars_data_dict.update({"html":table_html})
 
 # hemispheres
 
