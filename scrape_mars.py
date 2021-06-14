@@ -54,7 +54,7 @@ def scrape():
 # hemispheres
 
     img_url = ""
-    img_title = ""
+    title = ""
     hemisphere_image_urls = []
 
     for x in range(1, 8, 2):
@@ -66,7 +66,7 @@ def scrape():
         a = soup.find_all("a", {"class": "itemLink product-item"})[x]
     
         img_title_tagged = a.h3
-        img_title = img_title_tagged.text
+        title = img_title_tagged.text
 
         href = a.get("href")
         img_search_url = str(url) + str(href)
@@ -78,11 +78,11 @@ def scrape():
         a = soup.find_all("a")[3]
         href = a.get("href")
         img_url = str(url) + str(href)
-        hemisphere_entry.update({"title":img_title}) 
+        hemisphere_entry.update({"title":title}) 
         hemisphere_entry.update({"img_url":img_url})
         hemisphere_image_urls.append(hemisphere_entry)
     
-    mars_data_dict.update(hemisphere_image_urls)
+    mars_data_dict.update({"hem_urls":hemisphere_image_urls})
     browser.quit()
     
     return mars_data_dict
