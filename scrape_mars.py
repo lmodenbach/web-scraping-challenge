@@ -55,9 +55,10 @@ def scrape():
 
     img_url = ""
     img_title = ""
-    img_dict = {}
+    hemisphere_image_urls = []
 
     for x in range(1, 8, 2):
+        hemisphere_entry = {}
         url = 'https://marshemispheres.com/'
         browser.visit(url)
         html = browser.html
@@ -77,10 +78,11 @@ def scrape():
         a = soup.find_all("a")[3]
         href = a.get("href")
         img_url = str(url) + str(href)
-        img_dict.update({"img_title" + str(x):img_title}) 
-        img_dict.update({"img_url" + str(x):img_url})
+        hemisphere_entry.update({"title":img_title}) 
+        hemisphere_entry.update({"img_url":img_url})
+        hemisphere_image_urls.append(hemisphere_entry)
     
-    mars_data_dict.update(img_dict)
+    mars_data_dict.update(hemisphere_image_urls)
     browser.quit()
     
     return mars_data_dict
