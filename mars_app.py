@@ -1,6 +1,6 @@
 #necessary imports
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 import pymongo
 from scrape_mars import scrape
 
@@ -19,9 +19,15 @@ mars_data_dict = {}
 
 #populate home page with call to scrape followed by call to database, then pass data to template
 
+def init(): 
+   mars_data_dict = scrape()
+   db.mars.drop()
+   db.mars.insert_one(mars_data_dict) 
+
+init()
+
 @app.route("/")
 def home():
-    function_call()
     data_from_mongo = db.mars.find_one()
     return render_template("index.html", scraped=data_from_mongo)
 
@@ -33,6 +39,8 @@ def function_call():
     mars_data_dict = scrape()
     db.mars.drop()
     db.mars.insert_one(mars_data_dict)
+    return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
