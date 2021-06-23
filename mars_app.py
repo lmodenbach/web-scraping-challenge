@@ -17,7 +17,7 @@ db = client.mars_db
 data_from_mongo = {}
 mars_data_dict = {}
 
-#populate home page with call to scrape followed by call to database, then pass data to template
+#allow population of home page with call to scrape followed by call to database in init, 
 
 def init(): 
    mars_data_dict = scrape()
@@ -26,13 +26,16 @@ def init():
 
 init()
 
+#query database and pass data to template at home page
+
 @app.route("/")
 def home():
     data_from_mongo = db.mars.find_one()
     return render_template("index.html", scraped=data_from_mongo)
 
-#scrape route/function calls scrape script, drops the mars collection from mars_db and recreates/ 
-#repopulates it with a new entry
+#scrape route/function calls scrape script, drops the mars collection from mars_db and 
+#recreates/repopulates it with a new entry, then redirects back home where template is 
+#refreshed
 
 @app.route("/scrape")
 def function_call():
